@@ -262,26 +262,26 @@ if __name__=='__main__':
 	'''Generate source catalogs'''
 	# catalogs for src detection & photometry within same image
         for file, ff in zip(file_list,xrange(len(file_list))):
-	#	mk_counts_image(file, outfile=cnts_name[ff])					
-	#	run_daofind(cnts_name[ff], outfile=find_name[ff], dthreshold=4.0)			
-	#	run_daophot(cnts_name[ff], coordfile=find_name[ff], outfile=phot_name[ff])
-	#	replace_filevalue(phot_name[ff], 'INDEF',-9999.0)
+		mk_counts_image(file, outfile=cnts_name[ff])					
+		run_daofind(cnts_name[ff], outfile=find_name[ff], dthreshold=4.0)			
+		run_daophot(cnts_name[ff], coordfile=find_name[ff], outfile=phot_name[ff])
+		replace_filevalue(phot_name[ff], 'INDEF',-9999.0)
 		ac05[ff] = calc_apcorr(phot_name[ff])
 
 	# color catalogs--src detection in one image, photometry in other (***KLUGE*** ASSUMES ONLY 2 INPUT IMAGES)
 	# f606w color cats
-	#run_daophot(cnts_name[0], outfile=col_name[0], coordfile=find_name[1])
-        #replace_filevalue(col_name[0], 'INDEF', -9999.0)
-	#file_query = os.access(tcol_name[0], os.R_OK)
-	#if file_query == True: os.remove(tcol_name[0])      # remove previous trimmed files
-	#iraf.txdump(col_name[0],'xcenter,ycenter,mag', 'yes', Stdout=tcol_name[0])
+	run_daophot(cnts_name[0], outfile=col_name[0], coordfile=find_name[1])
+        replace_filevalue(col_name[0], 'INDEF', -9999.0)
+	file_query = os.access(tcol_name[0], os.R_OK)
+	if file_query == True: os.remove(tcol_name[0])      # remove previous trimmed files
+	iraf.txdump(col_name[0],'xcenter,ycenter,mag', 'yes', Stdout=tcol_name[0])
 
 	#f814w color cats
-	#run_daophot(cnts_name[1], outfile=col_name[1], coordfile=find_name[0])
-        #replace_filevalue(col_name[1], 'INDEF', -9999.0)
-	#file_query = os.access(tcol_name[1], os.R_OK)
-	#if file_query == True: os.remove(tcol_name[1])      # remove previous trimmed files
-	#iraf.txdump(col_name[1],'xcenter,ycenter,mag', 'yes', Stdout=tcol_name[1])
+	run_daophot(cnts_name[1], outfile=col_name[1], coordfile=find_name[0])
+        replace_filevalue(col_name[1], 'INDEF', -9999.0)
+	file_query = os.access(tcol_name[1], os.R_OK)
+	if file_query == True: os.remove(tcol_name[1])      # remove previous trimmed files
+	iraf.txdump(col_name[1],'xcenter,ycenter,mag', 'yes', Stdout=tcol_name[1])
 
 
         '''make CMD'''
